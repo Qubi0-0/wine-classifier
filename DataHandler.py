@@ -8,7 +8,7 @@ def read_data(folderpath):
             if filename.endswith(".csv"):
                 filepath = os.path.join(folderpath, filename)
                 dataset_name = os.path.splitext(filename)[0]
-                datasets[dataset_name] = pd.read_csv(filepath)
+                datasets[dataset_name] = pd.read_csv(filepath, delimiter=';')
                 null_values = check_null_values(datasets[dataset_name])
                 if null_values is not None:
                     print(f"Null values found in {dataset_name}:")
