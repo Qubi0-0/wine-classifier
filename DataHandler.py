@@ -1,30 +1,28 @@
+import os
 import pandas as pd
 
-class DataHandler:
-    def __init__(self, filepath):
-        self.filepath = filepath
-        self.data = None
-    
-    def read_data(self):
-        try:
-            self.data = pd.read_csv(self.filepath)
-            null_values = self.check_null_values()
-            if null_values is not None:
-                print("Null values found in the data:")
-                print(null_values)
-            return self.data
-        except FileNotFoundError:
-            print("File not found.")
-            return None
+def read_data(folderpath):
+    datasets = {}
+    try:
+        for filename in os.listdir(folderpath):
+            if filename.endswith(".csv"):
+                filepath = os.path.join(folderpath, filename)
+                dataset_name = os.path.splitext(filename)[0]
+                datasets[dataset_name] = pd.read_csv(filepath, delimiter=';')
+        return datasets
+    except FileNotFoundError:
+        print("Folder not found.")
+        return None
 
-    def check_null_values(self):
-        if self.data is not None:
-            return self.data.isnull().sum()
-        else:
-            return None
+def check_null_values(dataset, dataset_name):
+    null_values = dataset.isnull().sum()
+    if null_values is not None:
+        print(f"Null values found in {dataset_name}:")
+        print(null_values) 
 
-    
 if __name__ == "__main__":
-    data_handler = DataHandler("data/winequality-red.csv")
-    data = data_handler.read_data()
-    print(data.head())
+    datasets = read_data("data/full")
+    for dataset_name, dataset in datasets.items():
+        check_null_values(datasets[dataset_name], dataset_name)
+        print(f"Dataset: {dataset_name}")
+        print(dataset.head())
