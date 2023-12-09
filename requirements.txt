@@ -6,4 +6,5 @@ scikit-learn==0.24.2
 graphviz==0.17
 os==0.1.1
 copy==0.1.0
+imblearn
 ```
