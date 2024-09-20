@@ -22,6 +22,7 @@ The model performs quite well, particularly following data normalization and bal
 ![alt text](photos/image-2.png)
 
 Accuracy of MLP on winequality-white: 0.7799392097264438
+
 Accuracy of MLP on winequality-red: 0.8745791245791246
 
 
